@@ -5,13 +5,12 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 public class OrderCreatedEvent {
     private String orderId;
     private String productId;
     private String userId;
     private String addressId;
-    private Integer quantity;
-    private String orderStatus;
+    private String quantity;
 }

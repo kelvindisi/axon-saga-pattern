@@ -20,8 +20,7 @@ public class OrderAggregate {
     private String productId;
     private String userId;
     private String addressId;
-    private Integer quantity;
-    private String orderStatus;
+    private String quantity;
 
     @CommandHandler
     public OrderAggregate(CreateOrderCommand createOrderCommand) {
@@ -32,12 +31,11 @@ public class OrderAggregate {
     }
 
     @EventSourcingHandler
-    public void on(OrderCreatedEvent orderCreatedEvent) {
-        this.orderId = orderCreatedEvent.getOrderId();
-        this.orderStatus = orderCreatedEvent.getOrderStatus();
-        this.addressId = orderCreatedEvent.getAddressId();
-        this.userId = orderCreatedEvent.getUserId();
-        this.productId = orderCreatedEvent.getProductId();
-        this.quantity = orderCreatedEvent.getQuantity();
+    public void on(OrderCreatedEvent event) {
+        this.orderId = event.getOrderId();
+        this.productId= event.getProductId();
+        this.userId = event.getUserId();
+        this.addressId = event.getAddressId();
+        this.quantity = event.getQuantity();
     }
 }

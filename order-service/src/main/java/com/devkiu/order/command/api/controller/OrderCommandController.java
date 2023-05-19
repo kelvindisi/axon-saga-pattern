@@ -1,7 +1,7 @@
 package com.devkiu.order.command.api.controller;
 
 import com.devkiu.order.command.api.command.CreateOrderCommand;
-import com.devkiu.order.command.api.model.OrderRestModel;
+import com.devkiu.order.command.api.model.ProductRequestModel;
 import lombok.RequiredArgsConstructor;
 import org.axonframework.commandhandling.gateway.CommandGateway;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -14,17 +14,17 @@ import java.util.UUID;
 @RestController
 @RequestMapping("/orders")
 @RequiredArgsConstructor
-public class OrderController {
+public class OrderCommandController {
     private final CommandGateway commandGateway;
     @PostMapping
-    public String createOrder(@RequestBody OrderRestModel orderRestModel) {
+    public String addNewProduct(@RequestBody ProductRequestModel productRequestModel) {
         CreateOrderCommand createOrderCommand = CreateOrderCommand
                 .builder()
                 .orderId(UUID.randomUUID().toString())
-                .addressId(orderRestModel.getAddressId())
-                .userId(orderRestModel.getUserId())
-                .productId(orderRestModel.getProductId())
-                .quantity(orderRestModel.getQuantity())
+                .productId(productRequestModel.getProductId())
+                .addressId(productRequestModel.getAddressId())
+                .quantity(productRequestModel.getQuantity())
+                .userId(productRequestModel.getUserId())
                 .build();
         return commandGateway.sendAndWait(createOrderCommand);
     }

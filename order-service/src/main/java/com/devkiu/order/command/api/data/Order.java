@@ -8,8 +8,8 @@ import lombok.*;
 @Entity
 @Getter
 @Setter
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 @Builder
 public class Order {
     @Id
@@ -18,6 +18,5 @@ public class Order {
     private String productId;
     private String userId;
     private String addressId;
-    private Integer quantity;
-    private String orderStatus;
+    private String quantity;
 }

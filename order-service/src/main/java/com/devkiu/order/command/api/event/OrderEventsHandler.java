@@ -11,10 +11,12 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class OrderEventsHandler {
     private final OrderRepository orderRepository;
+
     @EventHandler
     public void on(OrderCreatedEvent event) {
         Order order = new Order();
         BeanUtils.copyProperties(event, order);
+
         orderRepository.save(order);
     }
 }
