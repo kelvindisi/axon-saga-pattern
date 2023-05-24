@@ -11,6 +11,8 @@ import org.axonframework.modelling.command.AggregateLifecycle;
 import org.axonframework.spring.stereotype.Aggregate;
 import org.springframework.beans.BeanUtils;
 
+;
+
 @Aggregate
 @Data
 @NoArgsConstructor
@@ -18,24 +20,26 @@ public class OrderAggregate {
     @AggregateIdentifier
     private String orderId;
     private String productId;
-    private String userId;
+    private Integer quantity;
     private String addressId;
-    private String quantity;
+    private String userId;
+    private String status;
 
     @CommandHandler
-    public OrderAggregate(CreateOrderCommand createOrderCommand) {
-        OrderCreatedEvent orderCreatedEvent = new OrderCreatedEvent();
-        BeanUtils.copyProperties(createOrderCommand, orderCreatedEvent);
+    public OrderAggregate(CreateOrderCommand command) {
+        OrderCreatedEvent event = new OrderCreatedEvent();
+        BeanUtils.copyProperties(command, event);
 
-        AggregateLifecycle.apply(orderCreatedEvent);
+        AggregateLifecycle.apply(event);
     }
 
     @EventSourcingHandler
     public void on(OrderCreatedEvent event) {
         this.orderId = event.getOrderId();
-        this.productId= event.getProductId();
-        this.userId = event.getUserId();
-        this.addressId = event.getAddressId();
+        this.productId = event.getProductId();
         this.quantity = event.getQuantity();
+        this.addressId = event.getAddressId();
+        this.userId = event.getUserId();
+        this.status = event.getStatus();
     }
 }
